@@ -19,7 +19,7 @@ func Handle(ctx context.Context, e event.Event) (*event.Event, error) {
 		return nil, err
 	}
 	val = val * 3
-	e.SetData("text/plain", []byte(strconv.Itoa(val)))
+	e.SetData("text/plain", strconv.Itoa(val))
 	return &e, nil // echo to caller
 }
 

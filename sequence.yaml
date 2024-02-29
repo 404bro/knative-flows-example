@@ -1,0 +1,23 @@
+apiVersion: flows.knative.dev/v1
+kind: Sequence
+metadata:
+  name: sequence
+spec:
+  channelTemplate:
+    apiVersion: messaging.knative.dev/v1
+    kind: InMemoryChannel
+  steps:
+    - ref:
+        apiVersion: serving.knative.dev/v1
+        kind: Service
+        name: mul3
+    - ref:
+        apiVersion: serving.knative.dev/v1
+        kind: Service
+        name: add1
+  reply:
+    ref:
+      kind: Service
+      apiVersion: serving.knative.dev/v1
+      name: event-display
+  
