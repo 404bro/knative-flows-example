@@ -30,6 +30,7 @@ func Handle(ctx context.Context, res http.ResponseWriter, req *http.Request) {
 	sendCtx := cloudevents.ContextWithTarget(context.Background(), "http://parallel-kn-parallel-kn-channel.default.svc.cluster.local")
 	if result := c.Send(sendCtx, event); cloudevents.IsUndelivered(result) {
 		log.Fatalf("failed to send, %v", result)
+		res.WriteHeader(http.StatusInternalServerError)
 	} else {
 		log.Printf("sent: %v", event)
 		res.WriteHeader(http.StatusAccepted)
