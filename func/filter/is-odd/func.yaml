@@ -1,0 +1,5 @@
+specVersion: 0.35.0
+name: is-odd
+runtime: go
+created: 2024-02-28T10:38:40.368313639Z
+invoke: cloudevent
