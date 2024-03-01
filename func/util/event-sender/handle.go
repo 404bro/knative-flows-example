@@ -27,7 +27,7 @@ func Handle(ctx context.Context, res http.ResponseWriter, req *http.Request) {
 	if err != nil {
 		log.Fatalf("failed to create client, %v", err)
 	}
-	sendCtx := cloudevents.ContextWithTarget(context.Background(), "http://parallel-kn-parallel-kn-channel.flows.svc.cluster.local")
+	sendCtx := cloudevents.ContextWithTarget(context.Background(), "http://parallel-kn-parallel-kn-channel.default.svc.cluster.local")
 	if result := c.Send(sendCtx, event); cloudevents.IsUndelivered(result) {
 		log.Fatalf("failed to send, %v", result)
 	} else {
