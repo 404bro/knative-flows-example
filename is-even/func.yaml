@@ -1,5 +1,12 @@
 specVersion: 0.35.0
 name: is-even
 runtime: go
+registry: 192.168.122.190/library
+image: 192.168.122.190/library/is-even:latest
+imageDigest: sha256:9805ab5c2b26456caeae1f5f450e55e8ab5653795aae2dfbf4c8a7428af9955e
 created: 2024-02-28T10:38:40.368313639Z
 invoke: cloudevent
+build:
+  builder: pack
+deploy:
+  namespace: flows

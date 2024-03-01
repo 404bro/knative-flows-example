@@ -1,5 +1,12 @@
 specVersion: 0.35.0
 name: is-odd
 runtime: go
+registry: 192.168.122.190/library
+image: 192.168.122.190/library/is-odd:latest
+imageDigest: sha256:1c03f73f129e7fd2c4a742e821815b3a6bfc462a84d53c39f0c8ecaddd06e654
 created: 2024-02-28T10:38:40.368313639Z
 invoke: cloudevent
+build:
+  builder: pack
+deploy:
+  namespace: flows

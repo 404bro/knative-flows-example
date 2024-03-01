@@ -1,5 +1,12 @@
 specVersion: 0.35.0
 name: mul3
 runtime: go
+registry: 192.168.122.190/library
+image: 192.168.122.190/library/mul3:latest
+imageDigest: sha256:421df9c40751e6637e8595f92a6fe3ba9d0ad9397c4a4eff440d91d6c66bbf7d
 created: 2024-02-28T11:39:23.984056964Z
 invoke: cloudevent
+build:
+  builder: pack
+deploy:
+  namespace: flows

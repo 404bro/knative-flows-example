@@ -1,5 +1,12 @@
 specVersion: 0.35.0
 name: add1
 runtime: go
+registry: 192.168.122.190/library
+image: 192.168.122.190/library/add1:latest
+imageDigest: sha256:735c16dedaf164ecaf924d1779abe2dd741fb6ff512ac349b4aacdba10a5b702
 created: 2024-02-28T11:39:23.984056964Z
 invoke: cloudevent
+build:
+  builder: pack
+deploy:
+  namespace: flows
