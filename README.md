@@ -5,11 +5,15 @@
 
 This is an example about how to use Knative Eventing(w/ Knative Eventing Flows) and Knative Function.
 
-This workflow does the following (as shown in the following diagram):
-* The `event-sender` function accepts an HTTP POST request with the request body being an integer string, and sends a CloudEvent with that integer string to the parallel resource.
-* The parallel resource will execute two branches concurrently, with `is-odd` and `is-even` as filters. The former filters odd requests, while the latter filters even requests.
-* The `is-odd` filter passes the CloudEvent to the `div2` function, which divides the integer corresponding to the event body by 2. The `is-even` filter passes the CloudEvent to a sequence (comprising the `mul3` and `add1` functions), which multiplies the integer corresponding to the event body by 3 and then adds 1.
-* The results of these operations are sent as CloudEvents to the `event-display` service for displaying the received CloudEvents.
+This workflow accomplishes the following (as shown in the diagram):
+
+- The `event-sender` function receives an HTTP POST request with an integer string in the request body and sends a CloudEvent with that integer string to the Broker resource.
+- The Broker forwards the received message to the `parallel-trigger` trigger and the `event-display-trigger` trigger.
+  - The `parallel-trigger` trigger filters events of type `com.example.collatz` and sends them to `parallel`.
+  - The `event-display-trigger` trigger filters events of type `com.example.display` and sends them to `event-display`.
+- `parallel` uses two functions, `is-odd` and `is-even`, as filters, executing two branches simultaneously, where the former filters odd requests and the latter filters even requests.
+- The `is-odd` filter passes the CloudEvent to the `div2` function, which divides the integer corresponding to the event body by 2; the `is-even` filter passes the CloudEvent to a sequence (comprising the `mul3` and `add1` functions in sequence), which multiplies the integer corresponding to the event body by 3 and then adds 1.
+- The results of the above computations are passed as CloudEvents to the Broker (with the type modified to `com.example.display`), which then forwards them to `event-display` for display.
 
 <p align="center">
   <img src="flows.svg" />
@@ -31,8 +35,8 @@ This workflow does the following (as shown in the following diagram):
 
 ### Test
 
-1. Run the `kubectl get ksvc` command to find the external access URL for the `event-sender` function (e.g., `http://event-sender.default.192.168.10.0.sslip.io`).
-2. Run `curl -v -d '{NUM}' "http://event-sender.default.192.168.10.0.sslip.io"`, where `{NUM}` is either an odd or even number.
+1. Run the `kubectl get ksvc` command to find the external access URL for the `event-sender` function (e.g., `http://event-sender.flows-example.192.168.0.0.sslip.io`).
+2. Run the `curl -v -d '{NUM}' "http://event-sender.default.192.168.0.0.sslip.io"` command, where `{NUM}` is either an odd or even number.
 3. Run the `kubectl get pods` command to find the Pod related to the `event-display` service, and use `kubectl logs {POD_NAME}` to view the logs.
 
 We should see the workflow correctly completing calculations for the "Collatz Conjecture" with output similar to the following in the logs.

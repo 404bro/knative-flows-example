@@ -2,6 +2,7 @@ apiVersion: flows.knative.dev/v1
 kind: Sequence
 metadata:
   name: sequence
+  namespace: flows-example
 spec:
   channelTemplate:
     apiVersion: messaging.knative.dev/v1
@@ -17,6 +18,6 @@ spec:
         name: add1
   reply:
     ref:
-      kind: Service
-      apiVersion: serving.knative.dev/v1
-      name: event-display
+      apiVersion: eventing.knative.dev/v1
+      kind: Broker
+      name: default

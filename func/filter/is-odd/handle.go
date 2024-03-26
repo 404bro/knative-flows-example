@@ -2,7 +2,10 @@ package function
 
 import (
 	"context"
+	"fmt"
+	"math/rand"
 	"strconv"
+	"time"
 
 	"github.com/cloudevents/sdk-go/v2/event"
 )
@@ -14,9 +17,13 @@ func Handle(ctx context.Context, e event.Event) (*event.Event, error) {
 	 *
 	 * Try running `go test`.  Add more test as you code in `handle_test.go`.
 	 */
+	time.Sleep(300 * time.Millisecond)
 	val, err := strconv.Atoi(string(e.Data()))
 	if err != nil {
 		return nil, err
+	}
+	if rand.Int()%100 < 1 {
+		return nil, fmt.Errorf("random error in is-odd")
 	}
 	if val%2 == 0 {
 		return nil, nil

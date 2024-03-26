@@ -1,0 +1,31 @@
+apiVersion: eventing.knative.dev/v1
+kind: Trigger
+metadata:
+  name: parallel-trigger
+  namespace: flows-example
+spec:
+  broker: default
+  filter:
+    attributes:
+      type: com.example.collatz
+  subscriber:
+    ref:
+      apiVersion: flows.knative.dev/v1
+      kind: Parallel
+      name: parallel
+---
+apiVersion: eventing.knative.dev/v1
+kind: Trigger
+metadata:
+  name: event-display-trigger
+  namespace: flows-example
+spec:
+  broker: default
+  filter:
+    attributes:
+      type: com.example.display
+  subscriber:
+    ref:
+      apiVersion: serving.knative.dev/v1
+      kind: Service
+      name: event-display

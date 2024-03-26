@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	cloudevents "github.com/cloudevents/sdk-go/v2"
+	"github.com/google/uuid"
 )
 
 // Handle an HTTP Request.
@@ -18,8 +19,8 @@ func Handle(ctx context.Context, res http.ResponseWriter, req *http.Request) {
 	 */
 	body, _ := io.ReadAll(req.Body)
 	event := cloudevents.NewEvent()
-	event.SetID("0")
-	event.SetType("com.example.event")
+	event.SetID(uuid.New().String())
+	event.SetType("com.example.collatz")
 	event.SetSource("event-sender")
 	event.SetData("text/plain", string(body))
 
@@ -27,7 +28,7 @@ func Handle(ctx context.Context, res http.ResponseWriter, req *http.Request) {
 	if err != nil {
 		log.Fatalf("failed to create client, %v", err)
 	}
-	sendCtx := cloudevents.ContextWithTarget(context.Background(), "http://parallel-kn-parallel-kn-channel.default.svc.cluster.local")
+	sendCtx := cloudevents.ContextWithTarget(context.Background(), "http://broker-ingress.knative-eventing.svc.cluster.local/flows-example/default")
 	if result := c.Send(sendCtx, event); cloudevents.IsUndelivered(result) {
 		log.Fatalf("failed to send, %v", result)
 		res.WriteHeader(http.StatusInternalServerError)
