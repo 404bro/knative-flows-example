@@ -1,0 +1,7 @@
+specVersion: 0.36.0
+name: random-sender
+runtime: go
+created: 2024-03-26T11:05:55.471996472Z
+invoke: cloudevent
+deploy:
+  namespace: flows-example

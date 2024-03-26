@@ -29,3 +29,19 @@ spec:
       apiVersion: serving.knative.dev/v1
       kind: Service
       name: event-display
+---
+apiVersion: eventing.knative.dev/v1
+kind: Trigger
+metadata:
+  name: random-sender-trigger
+  namespace: flows-example
+spec:
+  broker: default
+  filter:
+    attributes:
+      type: com.example.hello
+  subscriber:
+    ref:
+      apiVersion: serving.knative.dev/v1
+      kind: Service
+      name: random-sender

@@ -20,7 +20,7 @@ func Handle(ctx context.Context, res http.ResponseWriter, req *http.Request) {
 	body, _ := io.ReadAll(req.Body)
 	event := cloudevents.NewEvent()
 	event.SetID(uuid.New().String())
-	event.SetType("com.example.collatz")
+	event.SetType("com.example.hello")
 	event.SetSource("event-sender")
 	event.SetData("text/plain", string(body))
 

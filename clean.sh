@@ -1,8 +1,6 @@
 #!/bin/bash
 
-export REGISTRY=YOUR_REGISTRY # Container registry + registry namespace. (ex 'ghcr.io/myuser').
-
-functions=("add1" "div2" "mul3" "is-even" "is-odd" "event-sender")
+functions=("add1" "div2" "mul3" "is-even" "is-odd" "event-sender" "random-sender")
 for function in "${functions[@]}"; do
     func delete -n flows-example $function
 done
