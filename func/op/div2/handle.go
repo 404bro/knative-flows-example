@@ -17,7 +17,7 @@ func Handle(ctx context.Context, e event.Event) (*event.Event, error) {
 	 *
 	 * Try running `go test`.  Add more test as you code in `handle_test.go`.
 	 */
-	time.Sleep(500 * time.Millisecond)
+	time.Sleep(time.Duration(rand.Intn(51)+100) * time.Millisecond)
 	val, err := strconv.Atoi(string(e.Data()))
 	if err != nil {
 		return nil, err

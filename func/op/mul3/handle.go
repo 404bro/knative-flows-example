@@ -2,7 +2,6 @@ package function
 
 import (
 	"context"
-	"fmt"
 	"math/rand"
 	"strconv"
 	"time"
@@ -17,15 +16,12 @@ func Handle(ctx context.Context, e event.Event) (*event.Event, error) {
 	 *
 	 * Try running `go test`.  Add more test as you code in `handle_test.go`.
 	 */
-	time.Sleep(500 * time.Millisecond)
+	time.Sleep(time.Duration(rand.Intn(51)+50) * time.Millisecond)
 	val, err := strconv.Atoi(string(e.Data()))
 	if err != nil {
 		return nil, err
 	}
 	val = val * 3
-	if rand.Int()%100 < 5 {
-		return nil, fmt.Errorf("random error in mul3")
-	}
 	e.SetData("text/plain", strconv.Itoa(val))
 	return &e, nil // echo to caller
 }

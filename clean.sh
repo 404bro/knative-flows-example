@@ -11,4 +11,4 @@ for resource in "${resources[@]}"; do
 done
 
 kn broker delete default -n flows-example
-kubectl delete namespace flows-example
+# kubectl delete namespace flows-example
